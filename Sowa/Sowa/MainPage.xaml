@@ -6,9 +6,8 @@
 
     <StackLayout>
         <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+        <!--<Button Text="RTSP" BackgroundColor="Blue" Clicked="RTSPButton_OnClicked">
+        </Button>!-->
     </StackLayout>
 
 </ContentPage>

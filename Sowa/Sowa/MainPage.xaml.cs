@@ -13,5 +13,9 @@ namespace Sowa
         {
             InitializeComponent();
         }
+        /*private async void RTSPButton_OnClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new RTSPView());
+        }*/
     }
 }
