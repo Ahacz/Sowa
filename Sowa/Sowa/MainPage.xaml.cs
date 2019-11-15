@@ -7,9 +7,9 @@ using Xamarin.Forms;
 
 namespace Sowa
 {
-    public partial class RTSPView : ContentPage
+    public partial class MainPage : ContentPage
     {
-        public RTSPView()
+        public MainPage()
         {
             InitializeComponent();
         }
