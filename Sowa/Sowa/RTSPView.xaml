@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:shared="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
+             NavigationPage.HasNavigationBar="False"
              x:Class="Sowa.RTSPView">
     <shared:VideoView x:Name="VideoView0" Grid.Row="0" Grid.Column="0"/>
 

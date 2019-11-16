@@ -2,12 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Sowa"
+             NavigationPage.HasNavigationBar="False"
              x:Class="Sowa.MainPage">
 
     <StackLayout>
         <!-- Place new controls here -->
-        <!--<Button Text="RTSP" BackgroundColor="Blue" Clicked="RTSPButton_OnClicked">
-        </Button>!-->
+        <Button Text="RTSP" BackgroundColor="Blue" Clicked="RTSPButton_OnClicked">
+        </Button>
     </StackLayout>
 
 </ContentPage>

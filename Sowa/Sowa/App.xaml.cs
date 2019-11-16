@@ -10,8 +10,7 @@ namespace Sowa
         public App()
         {
             InitializeComponent();
-
-            MainPage = new RTSPView();
+            MainPage = new NavigationPage(new MainPage());
         }
 
         protected override void OnStart()

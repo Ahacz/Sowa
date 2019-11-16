@@ -18,6 +18,7 @@ namespace Sowa
 
         public RTSPView()
         {
+            NavigationPage.SetHasBackButton(this, false);               //Usuwa brzydki pasek
             InitializeComponent();
 
             // this will load the native libvlc library (if needed, depending on the platform). 
@@ -46,6 +47,11 @@ namespace Sowa
 
             VideoView3.MediaPlayer = new MediaPlayer(_libvlc);
             VideoView3.MediaPlayer.Play(new Media(_libvlc, VIDEO_URL, FromType.FromLocation));*/
+        }
+        protected override void OnDisappearing()            //Gdy znika strona podglądu RTSP - usuń obiekt odtwarzacza
+        {
+            base.OnDisappearing();
+            VideoView0.MediaPlayer.Dispose();
         }
     }
 

@@ -11,11 +11,12 @@ namespace Sowa
     {
         public MainPage()
         {
+            NavigationPage.SetHasBackButton(this, false);
             InitializeComponent();
         }
-        /*private async void RTSPButton_OnClicked(object sender, EventArgs e)
+        private async void RTSPButton_OnClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new RTSPView());
-        }*/
+        }
     }
 }
