@@ -1,0 +1,24 @@
+﻿<Window x:Class="Serwer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Serwer"
+        xmlns:wpf="clr-namespace:LibVLCSharp.WPF;assembly=LibVLCSharp.WPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="650" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition  Width="*"/>
+            <ColumnDefinition  Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0">Tutaj wrzuć opcje typu loginy, hasła, konfiguracje apki itd</Label>
+        <Label Grid.Row="0" Grid.Column="1">Tutaj mogą iść podglądy z kamerek. Pasuje ogarnąć podział na wincyj</Label>
+        <Label Grid.Row="1" Grid.Column="1"></Label>
+        <wpf:VideoView x:Name="VideoView" Grid.Row="1" Grid.Column="0"/>
+    </Grid>
+</Window>
