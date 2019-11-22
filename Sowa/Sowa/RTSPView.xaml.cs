@@ -14,6 +14,7 @@ namespace Sowa
     public partial class RTSPView : ContentPage
     {
         const string VIDEO_URL = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
+        const string VURL2 = "rtsp://192.168.0.110:8080/go.sdp";
         readonly LibVLC _libvlc;
 
         public RTSPView()
@@ -39,9 +40,9 @@ namespace Sowa
             VideoView0.MediaPlayer = new MediaPlayer(_libvlc);
             VideoView0.MediaPlayer.Play(new Media(_libvlc, VIDEO_URL, FromType.FromLocation));
 
-            /*VideoView1.MediaPlayer = new MediaPlayer(_libvlc);
-            VideoView1.MediaPlayer.Play(new Media(_libvlc, VIDEO_URL, FromType.FromLocation));
-
+            VideoView1.MediaPlayer = new MediaPlayer(_libvlc);
+            VideoView1.MediaPlayer.Play(new Media(_libvlc, VURL2, FromType.FromLocation));
+            /*
             VideoView2.MediaPlayer = new MediaPlayer(_libvlc);
             VideoView2.MediaPlayer.Play(new Media(_libvlc, VIDEO_URL, FromType.FromLocation));
 

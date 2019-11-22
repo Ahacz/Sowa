@@ -4,6 +4,17 @@
              xmlns:shared="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
              NavigationPage.HasNavigationBar="False"
              x:Class="Sowa.RTSPView">
-    <shared:VideoView x:Name="VideoView0" Grid.Row="0" Grid.Column="0"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition  Width="*"/>
+            <ColumnDefinition  Width="*"/>
+        </Grid.ColumnDefinitions>
+        <shared:VideoView x:Name="VideoView0" Grid.Row="0" Grid.Column="0"/>
+        <shared:VideoView x:Name="VideoView1" Grid.Row="1" Grid.Column="0"/>
+    </Grid>
 
 </ContentPage>

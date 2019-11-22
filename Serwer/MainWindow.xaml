@@ -18,7 +18,7 @@
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0">Tutaj wrzuć opcje typu loginy, hasła, konfiguracje apki itd</Label>
         <Label Grid.Row="0" Grid.Column="1">Tutaj mogą iść podglądy z kamerek. Pasuje ogarnąć podział na wincyj</Label>
-        <Label Grid.Row="1" Grid.Column="1"></Label>
+        <wpf:VideoView x:Name="VideoView1" Grid.Row="1" Grid.Column="1"/>
         <wpf:VideoView x:Name="VideoView" Grid.Row="1" Grid.Column="0"/>
     </Grid>
 </Window>

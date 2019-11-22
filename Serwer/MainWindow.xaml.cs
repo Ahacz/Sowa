@@ -26,19 +26,18 @@ namespace Serwer
 
         public MainWindow()
         {
-            InitializeComponent();
-            // this will load the native libvlc library (if needed, depending on the platform). 
-            Core.Initialize();
-
-            // instantiate the main libvlc object
+            InitializeComponent();            // this will load the native libvlc library (if needed, depending on the platform). 
+            Core.Initialize();                // instantiate the main libvlc object
             _libvlc = new LibVLC();
-            var mediaOptions = new[]
-            {
-                ":sout=#rtp{sdp=rtsp://192.168.1.162:8008/test}",
-                ":sout-keep"
-            };
             VideoView.MediaPlayer = new LibVLCSharp.Shared.MediaPlayer(_libvlc);
-            VideoView.MediaPlayer.Play(new Media(_libvlc, VIDEO_URL, FromType.FromLocation));
+            var rtsp1 = new Media(_libvlc, VIDEO_URL, FromType.FromLocation);       //Create a media object and then set its options to duplicate streams - 1 on display 2 as RTSP
+            rtsp1.AddOption(":sout=#duplicate" +
+                "{dst=display{noaudio}," +
+                "dst=rtp{mux=ts,dst=192.168.0.110,port=8080,sdp=rtsp://192.168.0.110:8080/go.sdp}");
+            VideoView.MediaPlayer.Play(rtsp1);
+            //VideoView1.MediaPlayer = new LibVLCSharp.Shared.MediaPlayer(_libvlc);
+            //VideoView1.MediaPlayer.Mute=true;
+            //VideoView1.MediaPlayer.Play(new Media(_libvlc, "rtsp://192.168.0.110:8080/go.sdp", FromType.FromLocation));
         }
     }
 }
