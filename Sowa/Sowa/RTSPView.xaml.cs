@@ -42,6 +42,8 @@ namespace Sowa
 
             VideoView1.MediaPlayer = new MediaPlayer(_libvlc);
             VideoView1.MediaPlayer.Play(new Media(_libvlc, VURL2, FromType.FromLocation));
+            VideoView0.MediaPlayer.Mute = true;
+            VideoView1.MediaPlayer.Mute = true;
             /*
             VideoView2.MediaPlayer = new MediaPlayer(_libvlc);
             VideoView2.MediaPlayer.Play(new Media(_libvlc, VIDEO_URL, FromType.FromLocation));
@@ -53,6 +55,7 @@ namespace Sowa
         {
             base.OnDisappearing();
             VideoView0.MediaPlayer.Dispose();
+            VideoView1.MediaPlayer.Dispose();
         }
     }
 
