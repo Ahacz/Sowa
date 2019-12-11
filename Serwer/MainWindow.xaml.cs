@@ -1,4 +1,5 @@
 ﻿using LibVLCSharp.Shared;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +27,15 @@ namespace Serwer
 
         public MainWindow()
         {
+            //var databasePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "VideoSources.db");
+            var databasePath = "D:\\Projects\\Sowa\\Sowa\\Serwer\\VideoSources.db";
+            var db = new SQLiteConnection(databasePath);
             InitializeComponent();            // this will load the native libvlc library (if needed, depending on the platform). 
             Core.Initialize();                // instantiate the main libvlc object
             _libvlc = new LibVLC();
+            db.Insert(new VideoSources {Name="test", Address="1.1.1.1" });
+            VideoSources x = db.Table<VideoSources>().First(p => p.Id.Equals(1));
+            x.Name = "chuj";
             VideoView.MediaPlayer = new LibVLCSharp.Shared.MediaPlayer(_libvlc);
             var rtsp1 = new Media(_libvlc, VIDEO_URL, FromType.FromLocation);       //Create a media object and then set its options to duplicate streams - 1 on display 2 as RTSP
             rtsp1.AddOption(":sout=#duplicate" +
