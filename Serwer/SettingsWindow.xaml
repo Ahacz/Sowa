@@ -22,11 +22,11 @@
                 <DataTemplate>
                     <Grid Margin="0,2">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300" />
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="100" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Title}" />
-                        <ProgressBar Grid.Column="1" Minimum="0" Maximum="100" Value="{Binding Completion}" />
+                        <TextBlock Text="{Binding Path=Name}" />
+                        <TextBlock Text="{Binding Path=Address}" Grid.Column="1" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
