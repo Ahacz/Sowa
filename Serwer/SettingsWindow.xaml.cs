@@ -23,15 +23,48 @@ namespace Serwer
 
         public SettingsWindow()
         {
+
+            InitializeComponent();
+            UpdateDatabaseList();
+        }
+        private void UpdateDatabaseList()     //Metoda synchronizująca listbox z bazą danych
+        {
             var databasePath = "D:\\Projects\\Sowa\\Sowa\\Serwer\\VideoSources.db";
             var db = new SQLiteConnection(databasePath);
-            List <VideoSources> videosList = db.Table<VideoSources>().ToList();
-            InitializeComponent();
+            List<VideoSources> videosList = db.Table<VideoSources>().ToList();
+            db.Close();
             lbVideoSourcesList.ItemsSource = videosList;
         }
-        private void DeleteFromTable(int id, SQLiteConnection db)
+        private void DeleteFromTable(long id)            //Metoda usuwająca wpis z bazy danych w oparciu o ID wpisu
         {
+            var databasePath = "D:\\Projects\\Sowa\\Sowa\\Serwer\\VideoSources.db";
+            var db = new SQLiteConnection(databasePath);
             db.Delete<VideoSources>(id);
+            db.Close();
+        }
+        private void AddToTable(VideoSources newSrc)
+        {
+            var databasePath = "D:\\Projects\\Sowa\\Sowa\\Serwer\\VideoSources.db";
+            var db = new SQLiteConnection(databasePath);
+            db.Insert(newSrc);
+            db.Close();
+        }
+        private void btnAddNewAddress_Click(object sender, RoutedEventArgs e)   //Wywołanie okna dodawania nowego wpisu
+        {
+            AddAddressDialog addressDialog = new AddAddressDialog();
+            if(addressDialog.ShowDialog()==true)
+            {
+                AddToTable(addressDialog.NewVideoSource);
+                UpdateDatabaseList();
+            }
+        }
+        private void btnDeleteSelectedAddress_Click(object sender, RoutedEventArgs e)       //Metoda usuwająca zaznaczone wpisy z bazy
+        {
+            foreach (VideoSources o in lbVideoSourcesList.SelectedItems)
+            {
+                DeleteFromTable(o.Id);
+            }
+            UpdateDatabaseList();
         }
     }
 }
