@@ -22,5 +22,29 @@ namespace Serwer.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
+        public string LocalAddress {
+            get {
+                return ((string)(this["LocalAddress"]));
+            }
+            set {
+                this["LocalAddress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8080")]
+        public string LocalPort {
+            get {
+                return ((string)(this["LocalPort"]));
+            }
+            set {
+                this["LocalPort"] = value;
+            }
+        }
     }
 }

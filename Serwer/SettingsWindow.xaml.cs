@@ -42,7 +42,7 @@ namespace Serwer
             db.Delete<VideoSources>(id);
             db.Close();
         }
-        private void AddToTable(VideoSources newSrc)
+        private void AddToTable(VideoSources newSrc)        //Metoda dodająca wpis do bazy danych
         {
             var databasePath = "D:\\Projects\\Sowa\\Sowa\\Serwer\\VideoSources.db";
             var db = new SQLiteConnection(databasePath);
@@ -66,5 +66,13 @@ namespace Serwer
             }
             UpdateDatabaseList();
         }
+
+
+        private void Settings_Closed(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Save();
+            Properties.Settings.Default.Reload();
+        }
+
     }
 }
