@@ -10,8 +10,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="25"/>
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <DockPanel Margin="10" Grid.Row="0">
             <StackPanel DockPanel.Dock="Right" Margin="10,0">
@@ -47,9 +46,9 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.Column="0">Adres IP interfejsu internetowego:</Label>
+            <Label HorizontalAlignment="Right" Grid.Row="0" Grid.Column="0">Adres IP interfejsu internetowego:</Label>
             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Source={StaticResource Settings}, Path=Default.LocalAddress}"/>
-            <Label Grid.Row="1" Grid.Column="0">Udostępniony port:</Label>
+            <Label HorizontalAlignment="Right" Grid.Row="1" Grid.Column="0">Udostępniony port:</Label>
             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Source={StaticResource Settings}, Path=Default.LocalPort}"/>
         </Grid>
     </Grid>

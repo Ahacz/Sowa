@@ -20,15 +20,6 @@
         <Label Grid.Row="0" Grid.Column="1">Tutaj mogą iść podglądy z kamerek. Pasuje ogarnąć podział na wincyj</Label>
         <wpf:VideoView x:Name="VideoView1" Grid.Row="1" Grid.Column="1"/>
         <wpf:VideoView x:Name="VideoView" Grid.Row="1" Grid.Column="0"/>
-        <Button Content="Ustawienia" Click="OnClickSettings" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0" Margin="329,12,5.8,236.4" Width="62" RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-35.99"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
+        <Button Content="Ustawienia" Click="OnClickSettings" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0" Margin="329,12,5.8,236.4" Width="62"/>
     </Grid>
 </Window>
