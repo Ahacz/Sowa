@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="LocalAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)">127.0.0.1</Value>
+      <Value Profile="(Default)">192.168.8.116</Value>
     </Setting>
     <Setting Name="LocalPort" Type="System.String" Scope="User">
       <Value Profile="(Default)">8080</Value>

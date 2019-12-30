@@ -49,7 +49,7 @@ namespace Serwer
             db.Insert(newSrc);
             db.Close();
         }
-        private void btnAddNewAddress_Click(object sender, RoutedEventArgs e)   //Wywołanie okna dodawania nowego wpisu
+        private void BtnAddNewAddress_Click(object sender, RoutedEventArgs e)   //Wywołanie okna dodawania nowego wpisu
         {
             AddAddressDialog addressDialog = new AddAddressDialog();
             if(addressDialog.ShowDialog()==true)
@@ -58,7 +58,7 @@ namespace Serwer
                 UpdateDatabaseList();
             }
         }
-        private void btnDeleteSelectedAddress_Click(object sender, RoutedEventArgs e)       //Metoda usuwająca zaznaczone wpisy z bazy
+        private void BtnDeleteSelectedAddress_Click(object sender, RoutedEventArgs e)       //Metoda usuwająca zaznaczone wpisy z bazy
         {
             foreach (VideoSources o in lbVideoSourcesList.SelectedItems)
             {

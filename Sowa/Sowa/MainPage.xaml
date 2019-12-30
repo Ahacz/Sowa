@@ -7,8 +7,8 @@
 
     <StackLayout>
         <!-- Place new controls here -->
-        <Button Text="RTSP" BackgroundColor="Blue" Clicked="RTSPButton_OnClicked">
-        </Button>
+        <Button Text="RTSP" BackgroundColor="Blue" Clicked="RTSPButton_OnClicked"/>
+        <Button Text="Połącz" BackgroundColor="Blue" Clicked="ConnectButton_OnClicked"/>
     </StackLayout>
 
 </ContentPage>

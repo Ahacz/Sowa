@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Owin.Hosting;
 
 namespace Serwer
 {
@@ -26,6 +27,10 @@ namespace Serwer
         readonly LibVLC _libvlc;
         public MainWindow()
         {
+            string url = @"192.168.8.116:1337/";
+            using (WebApp.Start<Startup>(url))
+            {
+            }
             InitializeComponent();            // this will load the native libvlc library (if needed, depending on the platform). 
             Core.Initialize();                // instantiate the main libvlc object
             _libvlc = new LibVLC();
@@ -34,9 +39,8 @@ namespace Serwer
             var rtsp1 = new Media(_libvlc, VIDEO_URL, FromType.FromLocation);       //Create a media object and then set its options to duplicate streams - 1 on display 2 as RTSP
             rtsp1.AddOption(GetOutputOption("rtsp"));
             VideoView.MediaPlayer.Play(rtsp1);
-            //VideoView1.MediaPlayer = new LibVLCSharp.Shared.MediaPlayer(_libvlc);
-            //VideoView1.MediaPlayer.Mute=true;
-            //VideoView1.MediaPlayer.Play(new Media(_libvlc, "rtsp://192.168.0.110:8080/go.sdp", FromType.FromLocation));
+            VideoView1.MediaPlayer = new LibVLCSharp.Shared.MediaPlayer(_libvlc) { Mute = true };
+            VideoView1.MediaPlayer.Play(new Media(_libvlc, "rtsp://192.168.8.116:8080/go.sdp", FromType.FromLocation));
         }
         private void OnClickSettings(object sender, RoutedEventArgs e)
         {

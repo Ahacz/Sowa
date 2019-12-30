@@ -24,7 +24,7 @@ namespace Serwer
             InitializeComponent();
         }
 
-        private void btnDialogOk_Click(object sender, RoutedEventArgs e)
+        private void BtnDialogOk_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
         }

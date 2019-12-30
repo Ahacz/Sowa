@@ -25,7 +25,7 @@ namespace Serwer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.8.116")]
         public string LocalAddress {
             get {
                 return ((string)(this["LocalAddress"]));

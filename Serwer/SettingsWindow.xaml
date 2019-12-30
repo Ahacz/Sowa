@@ -19,8 +19,8 @@
                         <Setter Property="Margin" Value="0,0,0,5" />
                     </Style>
                 </StackPanel.Resources>
-                <Button Name="btnAddNewAddress" Click="btnAddNewAddress_Click">Dodaj adres</Button>
-                <Button Name="btnDeleteSelectedAddress" Click="btnDeleteSelectedAddress_Click">Usuń zaznaczone</Button>
+                <Button Name="btnAddNewAddress" Click="BtnAddNewAddress_Click">Dodaj adres</Button>
+                <Button Name="btnDeleteSelectedAddress" Click="BtnDeleteSelectedAddress_Click">Usuń zaznaczone</Button>
             </StackPanel>
             <ListBox Name="lbVideoSourcesList" HorizontalContentAlignment="Stretch" SelectionMode="Extended">
                 <ListBox.ItemTemplate>
