@@ -23,7 +23,7 @@ namespace Sowa
         private async void ConnectButton_OnClicked(object sender, EventArgs e)
         {
             connection = new HubConnectionBuilder()
-                .WithUrl("http://192.168.8.116:1337") //Make sure that the route is the same with your configured route for your HUB
+                .WithUrl("http://192.168.0.112:1337") //Make sure that the route is the same with your configured route for your HUB
                 .Build();
             await Connect();
         }

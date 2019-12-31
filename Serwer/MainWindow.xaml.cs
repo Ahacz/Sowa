@@ -27,35 +27,44 @@ namespace Serwer
         readonly LibVLC _libvlc;
         public MainWindow()
         {
-            string url = @"192.168.8.116:1337/";
+            string url = @"192.168.0.112:1337/";
             using (WebApp.Start<Startup>(url))
             {
             }
             InitializeComponent();            // this will load the native libvlc library (if needed, depending on the platform). 
             Core.Initialize();                // instantiate the main libvlc object
-            _libvlc = new LibVLC();
+            _libvlc = new LibVLC(new[]
+            {
+                "--verbose=2",
+                "--file-logging",
+                "--logfile=D:\\vlc-log2.txt"
+            });
             //db.Insert(new VideoSources {Name="test", Address="1.1.1.1" });
             VideoView.MediaPlayer = new LibVLCSharp.Shared.MediaPlayer(_libvlc);
             var rtsp1 = new Media(_libvlc, VIDEO_URL, FromType.FromLocation);       //Create a media object and then set its options to duplicate streams - 1 on display 2 as RTSP
-            rtsp1.AddOption(GetOutputOption("rtsp"));
+            rtsp1.AddOption(GetConfigurationString(1));
+            /*rtsp1.AddOption(":sout=#duplicate" +
+                "{dst=display{noaudio}," +
+                "dst=rtp{mux=ts,dst=192.168.0.112,port=8080,sdp=rtsp://192.168.0.112:8080/go.sdp}");*/
             VideoView.MediaPlayer.Play(rtsp1);
             VideoView1.MediaPlayer = new LibVLCSharp.Shared.MediaPlayer(_libvlc) { Mute = true };
-            VideoView1.MediaPlayer.Play(new Media(_libvlc, "rtsp://192.168.8.116:8080/go.sdp", FromType.FromLocation));
+            VideoView1.MediaPlayer.Play(new Media(_libvlc, "rtsp://192.168.0.112:8080/go.sdp", FromType.FromLocation));
         }
         private void OnClickSettings(object sender, RoutedEventArgs e)
         {
             SettingsWindow settings = new SettingsWindow();
             settings.Show();
         }
-        private string GetOutputOption(string outputType)       //Metoda generująca konfiguracje dla odtwarzacza VLC
+        private string GetConfigurationString(int outputType)       //Metoda generująca konfiguracje dla odtwarzacza VLC
         {
-            if (outputType == "rtsp")
+            string address = Properties.Settings.Default.LocalAddress;
+            string port = Properties.Settings.Default.LocalPort;
+            if (outputType == 1)
                 return
                     ":sout=#duplicate" +
                     "{dst=display{noaudio}," +
-                    "dst=rtp{mux=ts,dst=" + Properties.Settings.Default.LocalAddress +
-                    ",port=" + Properties.Settings.Default.LocalPort
-                    + ",sdp=rtsp://" + Properties.Settings.Default.LocalAddress + "/go.sdp}";
+                    "dst=rtp{mux=ts,dst=" + address +
+                    ",port=" + port + ",sdp=rtsp://" + address +":" + port + "/go.sdp}";
             else return "error";
         }
     }
