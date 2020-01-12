@@ -1,10 +1,15 @@
-﻿using System;
+﻿using Microsoft.AspNet.SignalR.Client;
+using Microsoft.AspNet.SignalR.Client.Transports;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Security;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using Microsoft.AspNetCore.SignalR.Client;
 
 namespace Sowa
 {
@@ -20,18 +25,57 @@ namespace Sowa
         {
             await Navigation.PushAsync(new RTSPView());
         }
-        private async void ConnectButton_OnClicked(object sender, EventArgs e)
+        private void ConnectButton_OnClicked(object sender, EventArgs e)
         {
-            connection = new HubConnectionBuilder()
-                .WithUrl("http://192.168.0.112:1337") //Make sure that the route is the same with your configured route for your HUB
-                .Build();
-            await Connect();
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(delegate { return true; });
+            IHubProxy _hub;
+            string url = @"http://192.168.8.116:1337/";
+            connection = new HubConnection(url);
+            var writer = new DebugTextWriter();
+            connection.TraceWriter = writer;
+            connection.TraceLevel = TraceLevels.All;
+            connection.TraceWriter = Console.Out;
+            _hub = connection.CreateHubProxy("CommHub");
+            connection.Start().Wait();
+            connection.Error += ex => Console.WriteLine("SignalR error: {0}", ex.Message);
+            _hub.Invoke("RequestOutStream","kamerka");
         }
-        async Task Connect()
+        private class DebugTextWriter : TextWriter
         {
-            await connection.StartAsync();
-            await connection.InvokeAsync("Tester");
-        }
+            private StringBuilder buffer;
 
+            public DebugTextWriter()
+            {
+                buffer = new StringBuilder();
+            }
+
+            public override void Write(char value)
+            {
+                switch (value)
+                {
+                    case '\n':
+                        return;
+                    case '\r':
+                        Debug.WriteLine(buffer.ToString());
+                        buffer.Clear();
+                        return;
+                    default:
+                        buffer.Append(value);
+                        break;
+                }
+            }
+
+            public override void Write(string value)
+            {
+                Debug.WriteLine(value);
+
+            }
+            #region implemented abstract members of TextWriter
+            public override Encoding Encoding
+            {
+                get { throw new NotImplementedException(); }
+            }
+            #endregion
+        }
     }
 }

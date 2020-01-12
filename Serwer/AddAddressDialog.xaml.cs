@@ -31,7 +31,7 @@ namespace Serwer
 
         public VideoSources NewVideoSource
         {
-            get { return new VideoSources { Name = txtName.Text, Address = txtAddress.Text, Password = txtPassword.Text }; }
+            get { return new VideoSources { Name = txtName.Text, Address = txtAddress.Text}; }
         }
     }
 }

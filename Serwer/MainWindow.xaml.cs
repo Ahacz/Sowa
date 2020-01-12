@@ -24,48 +24,54 @@ namespace Serwer
     public partial class MainWindow : Window
     {
         const string VIDEO_URL = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
-        readonly LibVLC _libvlc;
+        //const string VIDEO_URL = "rtsp://test:lolki5@192.168.8.240:88/videoMain";
+        public static LibVLC _libvlc;
+        public LibVLCSharp.Shared.MediaPlayer outputMediaPlayer;
+        public Media outputmedia;
+        public IDisposable SignalR { get; set; }
         public MainWindow()
         {
-            string url = @"192.168.0.112:1337/";
-            using (WebApp.Start<Startup>(url))
-            {
-            }
+            /*string url = @"http://192.168.8.116:1337/";
+            WebApp.Start<Startup>(url);
+            //WebApp.Start<Startup>("https://192.168.8.116:8082");*/
             InitializeComponent();            // this will load the native libvlc library (if needed, depending on the platform). 
             Core.Initialize();                // instantiate the main libvlc object
+        }
+        private void OnClickStartSrv(object sender, RoutedEventArgs e)
+        {
             _libvlc = new LibVLC(new[]
             {
                 "--verbose=2",
                 "--file-logging",
                 "--logfile=D:\\vlc-log2.txt"
             });
-            //db.Insert(new VideoSources {Name="test", Address="1.1.1.1" });
-            VideoView.MediaPlayer = new LibVLCSharp.Shared.MediaPlayer(_libvlc);
+            outputMediaPlayer = new LibVLCSharp.Shared.MediaPlayer(_libvlc);
+            //CommHub hub = new CommHub(outputMediaPlayer);
+            VideoView.MediaPlayer = new LibVLCSharp.Shared.MediaPlayer(_libvlc) { Mute = true };
             var rtsp1 = new Media(_libvlc, VIDEO_URL, FromType.FromLocation);       //Create a media object and then set its options to duplicate streams - 1 on display 2 as RTSP
-            rtsp1.AddOption(GetConfigurationString(1));
+                                                                                    //string requestedStream = "";
+                                                                                    //var outputStream = new Media(_libvlc, requestedStream, FromType.FromLocation);
+
+            //rtsp1.AddOption(VLCControl.GetConfigurationString());
             /*rtsp1.AddOption(":sout=#duplicate" +
                 "{dst=display{noaudio}," +
                 "dst=rtp{mux=ts,dst=192.168.0.112,port=8080,sdp=rtsp://192.168.0.112:8080/go.sdp}");*/
             VideoView.MediaPlayer.Play(rtsp1);
             VideoView1.MediaPlayer = new LibVLCSharp.Shared.MediaPlayer(_libvlc) { Mute = true };
-            VideoView1.MediaPlayer.Play(new Media(_libvlc, "rtsp://192.168.0.112:8080/go.sdp", FromType.FromLocation));
+            VideoView1.MediaPlayer.Play(new Media(_libvlc, "rtsp://192.168.8.116:1337/go.sdp", FromType.FromLocation));
+            string url = @"http://" + Properties.Settings.Default.LocalAddress + ":" + Properties.Settings.Default.LocalPort;
+            SignalR = WebApp.Start<Startup>(url);
+            StartButton.IsEnabled = false;
+        }
+        private void OnClickStopSrv(object sender, RoutedEventArgs e)
+        {
+            SignalR.Dispose();
+            StartButton.IsEnabled = true;
         }
         private void OnClickSettings(object sender, RoutedEventArgs e)
         {
             SettingsWindow settings = new SettingsWindow();
             settings.Show();
-        }
-        private string GetConfigurationString(int outputType)       //Metoda generująca konfiguracje dla odtwarzacza VLC
-        {
-            string address = Properties.Settings.Default.LocalAddress;
-            string port = Properties.Settings.Default.LocalPort;
-            if (outputType == 1)
-                return
-                    ":sout=#duplicate" +
-                    "{dst=display{noaudio}," +
-                    "dst=rtp{mux=ts,dst=" + address +
-                    ",port=" + port + ",sdp=rtsp://" + address +":" + port + "/go.sdp}";
-            else return "error";
         }
     }
 }

@@ -33,8 +33,6 @@ namespace Serwer
         [NotNull]
         public String Address { get; set; }
         
-        public String Password { get; set; }
-        
     }
     
 }

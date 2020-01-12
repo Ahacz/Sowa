@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin.Cors;
+﻿using Microsoft.AspNet.SignalR;
+using Microsoft.Owin.Cors;
 using Owin;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,9 @@ namespace Serwer
         public void Configuration(IAppBuilder app)
         {
             app.UseCors(CorsOptions.AllowAll);
-            app.MapSignalR();
+            var hubConfiguration = new HubConfiguration();
+            hubConfiguration.EnableDetailedErrors = true;
+            app.MapSignalR(hubConfiguration);
         }
     }
 }

@@ -5,11 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Serwer"
         mc:Ignorable="d"
-        Title="Dodaj nowy adres" Height="130" Width="800">
+        Title="Dodaj nowy adres" Height="130" Width="600">
     <Grid Margin="15">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -23,10 +21,8 @@
         <TextBox Name="txtName" Grid.Column="1" Grid.Row="0" MinWidth="150"></TextBox>
         <Label Grid.Column="2" Grid.Row="0">Adres:</Label>
         <TextBox Name="txtAddress" Grid.Column="3" Grid.Row="0" MinWidth="250"></TextBox>
-        <Label Grid.Column="4" Grid.Row="0">Hasło:</Label>
-        <TextBox Name="txtPassword" Grid.Column="5" Grid.Row="0" MinWidth="100"></TextBox>
 
-        <WrapPanel Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
+        <WrapPanel Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
             <Button IsDefault="True" Name="btnDialogOk" Click="BtnDialogOk_Click" MinWidth="60" Margin="0,0,10,0">_Ok</Button>
             <Button IsCancel="True" MinWidth="60">_Cancel</Button>
         </WrapPanel>
