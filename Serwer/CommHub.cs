@@ -10,28 +10,21 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace Serwer
 {
     [HubName("CommHub")]
     public class CommHub:Hub
     {
-        private const string VIDEO_URL = "rtsp://test:lolki5@192.168.8.240:88/videoMain";
-        private MediaPlayer player;
-        public CommHub()
+        VLCControl outputplayer = new VLCControl();
+        public void RequestConnectionsList()            //potem przyjmij string na https
         {
-            //player = mainpl;
-            /*var databasePath = "D:\\Projects\\Sowa\\Sowa\\Serwer\\VideoSources.db";
+            var databasePath = "D:\\Projects\\Sowa\\Sowa\\Serwer\\VideoSources.db";
             var db = new SQLiteConnection(databasePath);
-            string input = db.Table<VideoSources>().FirstOrDefault(p => p.Name == "test").Address;
-            db.Close();
-            rtsp = new Media(_libvlc, input, FromType.FromLocation);
-            string testst = VLCControl.GetConfigurationString();
-            rtsp.AddOption(testst);*/
-
-        }
-        public void Tester()
-        {
+            List<string> output = db.Table<VideoSources>().Select(p => p.Name).ToList();    //Pobiera z bazy listę nazw kamerek.
+            Clients.Client(Context.ConnectionId).CamsInfo(output);
         }
         public void RequestOutStream(string requestedName)
         {
@@ -39,9 +32,15 @@ namespace Serwer
             var db = new SQLiteConnection(databasePath);
             string input = db.Table<VideoSources>().FirstOrDefault(p => p.Name == "test").Address;
             db.Close();
-            Media rtsp = new Media(MainWindow._libvlc, input, FromType.FromLocation);
+            var rtsp = new Media(MainWindow._libvlc, input, FromType.FromLocation);
             rtsp.AddOption(VLCControl.GetConfigurationString());
-            //MainWindow.outputMediaPlayer.Play(rtsp);
+            Application.Current.Dispatcher.Invoke(() => 
+            {
+                var mainwindow = (MainWindow)Application.Current.MainWindow;
+                mainwindow.outputMediaPlayer.Stop();
+                //mainwindow.outputMediaPlayer.Play(rtsp);
+                mainwindow.outputMediaPlayer.Play(new Media(MainWindow._libvlc, "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov", FromType.FromLocation));
+            });
         }
     }
 }

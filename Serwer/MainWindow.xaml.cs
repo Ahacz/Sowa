@@ -23,7 +23,7 @@ namespace Serwer
     /// </summary>
     public partial class MainWindow : Window
     {
-        const string VIDEO_URL = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
+        public const string VIDEO_URL = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
         //const string VIDEO_URL = "rtsp://test:lolki5@192.168.8.240:88/videoMain";
         public static LibVLC _libvlc;
         public LibVLCSharp.Shared.MediaPlayer outputMediaPlayer;
@@ -31,14 +31,13 @@ namespace Serwer
         public IDisposable SignalR { get; set; }
         public MainWindow()
         {
+            //private HubConnection connection;
             /*string url = @"http://192.168.8.116:1337/";
             WebApp.Start<Startup>(url);
             //WebApp.Start<Startup>("https://192.168.8.116:8082");*/
             InitializeComponent();            // this will load the native libvlc library (if needed, depending on the platform). 
             Core.Initialize();                // instantiate the main libvlc object
-        }
-        private void OnClickStartSrv(object sender, RoutedEventArgs e)
-        {
+
             _libvlc = new LibVLC(new[]
             {
                 "--verbose=2",
@@ -59,8 +58,18 @@ namespace Serwer
             VideoView.MediaPlayer.Play(rtsp1);
             VideoView1.MediaPlayer = new LibVLCSharp.Shared.MediaPlayer(_libvlc) { Mute = true };
             VideoView1.MediaPlayer.Play(new Media(_libvlc, "rtsp://192.168.8.116:1337/go.sdp", FromType.FromLocation));
+            //IHubContext context = GlobalHost.ConnectionManager.GetHubContext<CommHub>(); Może się przydać
+
+        }
+       /* public static void ChangeStreams(Media input)
+        {
+            outputMediaPlayer.Stop();
+            outputMediaPlayer.Play(input);
+        }*/
+        private void OnClickStartSrv(object sender, RoutedEventArgs e)
+        {
             string url = @"http://" + Properties.Settings.Default.LocalAddress + ":" + Properties.Settings.Default.LocalPort;
-            SignalR = WebApp.Start<Startup>(url);
+            SignalR = WebApp.Start<Startup> (url);
             StartButton.IsEnabled = false;
         }
         private void OnClickStopSrv(object sender, RoutedEventArgs e)
