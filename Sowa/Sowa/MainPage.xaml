@@ -21,9 +21,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Margin="2,2,2,2">
-                            <Label Text="{Binding}"/>
-                        </StackLayout>
+                        <Label Text="{Binding}"/>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

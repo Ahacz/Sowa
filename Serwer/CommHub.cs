@@ -18,19 +18,20 @@ namespace Serwer
     [HubName("CommHub")]
     public class CommHub:Hub
     {
-        VLCControl outputplayer = new VLCControl();
-        public void RequestConnectionsList()            //potem przyjmij string na https
+        public void RequestConnectionsList() 
         {
             var databasePath = "D:\\Projects\\Sowa\\Sowa\\Serwer\\VideoSources.db";
             var db = new SQLiteConnection(databasePath);
-            List<string> output = db.Table<VideoSources>().Select(p => p.Name).ToList();    //Pobiera z bazy listę nazw kamerek.
+            List<string> output = 
+                db.Table<VideoSources>().Select(p => p.Name).ToList();    
             Clients.Client(Context.ConnectionId).CamsInfo(output);
         }
         public void RequestOutStream(string requestedName)
         {
             var databasePath = "D:\\Projects\\Sowa\\Sowa\\Serwer\\VideoSources.db";
             var db = new SQLiteConnection(databasePath);
-            string input = db.Table<VideoSources>().FirstOrDefault(p => p.Name == "test").Address;
+            string input = db.Table<VideoSources>()
+                .FirstOrDefault(p => p.Name == requestedName).Address;
             db.Close();
             var rtsp = new Media(MainWindow._libvlc, input, FromType.FromLocation);
             rtsp.AddOption(VLCControl.GetConfigurationString());
@@ -38,8 +39,7 @@ namespace Serwer
             {
                 var mainwindow = (MainWindow)Application.Current.MainWindow;
                 mainwindow.outputMediaPlayer.Stop();
-                //mainwindow.outputMediaPlayer.Play(rtsp);
-                mainwindow.outputMediaPlayer.Play(new Media(MainWindow._libvlc, "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov", FromType.FromLocation));
+                mainwindow.outputMediaPlayer.Play(rtsp);
             });
         }
     }

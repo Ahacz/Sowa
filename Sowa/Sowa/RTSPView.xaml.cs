@@ -32,11 +32,6 @@ namespace Sowa
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            // create mediaplayer objects,
-            // attach them to their respective VideoViews
-            // create media objects and start playback
-
             VideoView0.MediaPlayer = new MediaPlayer(_libvlc);
             VideoView0.MediaPlayer.Play(new Media(_libvlc, VIDEO_URL, FromType.FromLocation));
 

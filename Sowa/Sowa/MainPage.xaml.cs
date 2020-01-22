@@ -18,40 +18,48 @@ namespace Sowa
     {
         private HubConnection connection;
         private IHubProxy _hub;
-        private string srvAddress;
+        private List<string> localNamesList;
         public MainPage()
         {
             ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(delegate { return true; });
             //string url = @"http://192.168.8.116:1337/";
-            srvAddress = Preferences.Get("SrvAddress","0.0.0.0:8080");
             NavigationPage.SetHasBackButton(this, false);
             InitializeComponent();
+            AddressEntry.Text = Preferences.Get("SrvAddress", "0.0.0.0:8080");
         }
         private async void RTSPButton_OnClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new RTSPView());
         }
-        private async void ConnectButton_OnClicked(object sender, EventArgs e)
+        private void ConnectButton_OnClicked(object sender, EventArgs e)
         {
-            Preferences.Set("SrvAddress", srvAddress);
-            connection = new HubConnection(srvAddress);
-            var writer = new DebugTextWriter();
-            connection.TraceWriter = writer;
-            connection.TraceLevel = TraceLevels.All;
-            connection.TraceWriter = Console.Out;
-            _hub = connection.CreateHubProxy("CommHub");
-            await connection.Start();
-            connection.Error += ex => Console.WriteLine("SignalR error: {0}", ex.Message);
-            await _hub.Invoke("RequestConnectionsList");
+            InitiateServerConnection();
+            GetCamsNames();
+        }
+
+        private async void InitiateServerConnection()
+        {
+            string uri = "https://" + AddressEntry.Text;
+            try
+            {
+                connection = new HubConnection(@uri);
+                _hub = connection.CreateHubProxy("CommHub");
+                await connection.Start();
+                Preferences.Set("SrvAddress", AddressEntry.Text);
+                await _hub.Invoke("RequestConnectionsList");
+            }
+            catch (System.Net.Http.HttpRequestException)
+            {
+            }
+        }
+        private void GetCamsNames()
+        {
             _hub.On<List<string>>("CamsInfo", namelist =>
             {
-                Device.BeginInvokeOnMainThread(()=> UpdateLayout(namelist));
-
+                localNamesList = namelist;
+                Device.BeginInvokeOnMainThread(() 
+                    => Connectionslist.ItemsSource = localNamesList);
             });
-        }
-        private void UpdateLayout(List<string> input)
-        {
-            Connectionslist.ItemsSource = input;
         }
 
         private class DebugTextWriter : TextWriter

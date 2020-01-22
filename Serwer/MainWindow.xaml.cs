@@ -68,7 +68,7 @@ namespace Serwer
         }*/
         private void OnClickStartSrv(object sender, RoutedEventArgs e)
         {
-            string url = @"http://" + Properties.Settings.Default.LocalAddress + ":" + Properties.Settings.Default.LocalPort;
+            string url = @"https://" + Properties.Settings.Default.LocalAddress + ":8080";//+ Properties.Settings.Default.LocalPort;
             SignalR = WebApp.Start<Startup> (url);
             StartButton.IsEnabled = false;
         }
