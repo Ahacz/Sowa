@@ -6,22 +6,28 @@
         xmlns:local="clr-namespace:Serwer"
         xmlns:wpf="clr-namespace:LibVLCSharp.WPF;assembly=LibVLCSharp.WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="800">
+        Title="Serwer RTSP" Height="550" Width="600">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition  Width="*"/>
-            <ColumnDefinition  Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.Column="0">Tutaj wrzuć opcje typu loginy, hasła, konfiguracje apki itd</Label>
-        <Label Grid.Row="0" Grid.Column="1">Tutaj mogą iść podglądy z kamerek. Pasuje ogarnąć podział na wincyj</Label>
-        <wpf:VideoView x:Name="VideoView1" Grid.Row="1" Grid.Column="1"/>
-        <wpf:VideoView x:Name="VideoView" Grid.Row="1" Grid.Column="0"/>
-        <Button Content="Ustawienia" Click="OnClickSettings" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0" Margin="325,10,10,240" Width="60"/>
-        <Button x:Name="StartButton" Content="START" Click="OnClickStartSrv" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0" Margin="325,75,10,210" Width="60"/>
-        <Button x:Name="SopButton" Content="STOP" Click="OnClickStopSrv" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0" Margin="326,105,10.8,179.4" Width="60"/>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="Start" Click="OnClickStartSrv" Name="StartItem"/>
+                <MenuItem Header="Stop" Click="OnClickStopSrv" IsEnabled="False" Name="StopItem"/>
+                <MenuItem Header="Ustawienia" Click="OnClickSettings" />
+                <MenuItem Header="O programie" />
+                <MenuItem Header="Pomoc"/>
+            </Menu>
+            <ComboBox DockPanel.Dock="Bottom" x:Name="Combobox" SelectionChanged="Combobox_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <wpf:VideoView x:Name="VideoView" Grid.Row="1"/>
     </Grid>
 </Window>

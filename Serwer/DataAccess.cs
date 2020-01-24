@@ -27,7 +27,7 @@ namespace Serwer
         [PrimaryKey, AutoIncrement]
         public Int64 Id { get; set; }
         
-        [NotNull]
+        [NotNull, Unique]
         public String Name { get; set; }
         
         [NotNull]

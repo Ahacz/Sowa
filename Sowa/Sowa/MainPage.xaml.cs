@@ -22,24 +22,20 @@ namespace Sowa
         public MainPage()
         {
             ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(delegate { return true; });
-            //string url = @"http://192.168.8.116:1337/";
             NavigationPage.SetHasBackButton(this, false);
             InitializeComponent();
-            AddressEntry.Text = Preferences.Get("SrvAddress", "0.0.0.0:8080");
-        }
-        private async void RTSPButton_OnClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new RTSPView());
+            AddressEntry.Text = Preferences.Get("SrvAddress", "0.0.0.0");
         }
         private void ConnectButton_OnClicked(object sender, EventArgs e)
         {
             InitiateServerConnection();
             GetCamsNames();
+            GetOutputPort();
         }
 
         private async void InitiateServerConnection()
         {
-            string uri = "https://" + AddressEntry.Text;
+            string uri = "https://" + AddressEntry.Text+":8080";
             try
             {
                 connection = new HubConnection(@uri);
@@ -59,6 +55,14 @@ namespace Sowa
                 localNamesList = namelist;
                 Device.BeginInvokeOnMainThread(() 
                     => Connectionslist.ItemsSource = localNamesList);
+            });
+        }
+        
+        private void GetOutputPort()
+        {
+            _hub.On<string>("OutputPort", port =>
+            {
+                Preferences.Set("SrvPort", port);
             });
         }
 
@@ -99,10 +103,12 @@ namespace Sowa
             }
             #endregion
         }
-        private void Connectionslist_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private async void Connectionslist_ItemSelected
+            (object sender, SelectedItemChangedEventArgs e)
         {
             var but =  Connectionslist.SelectedItem.ToString();
-            _hub.Invoke("RequestOutStream", but);
+            await _hub.Invoke("RequestOutStream", but);
+            await Navigation.PushAsync(new RTSPView());
         }
     }
 }

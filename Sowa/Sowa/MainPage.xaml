@@ -13,8 +13,7 @@
         <StackLayout Grid.Row="0">
             <Label>Adres IP serwera:</Label>
             <Entry x:Name="AddressEntry"/>
-            <Button Text="RTSP" BackgroundColor="Blue" Clicked="RTSPButton_OnClicked"/>
-            <Button Text="Połącz" BackgroundColor="Blue" Clicked="ConnectButton_OnClicked"/>
+            <Button Text="Połącz" BackgroundColor="Gray" Clicked="ConnectButton_OnClicked"/>
         </StackLayout>
         <Label Grid.Row="1">Dostępne nazwy kamerek:</Label>
         <ListView x:Name="Connectionslist" Grid.Row="2" ItemSelected="Connectionslist_ItemSelected">

@@ -20,42 +20,37 @@ namespace Serwer
     /// </summary>
     public partial class SettingsWindow : Window
     {
-
         public SettingsWindow()
         {
-
             InitializeComponent();
-            UpdateDatabaseList();
+            lbVideoSourcesList.ItemsSource = GetDatabaseList();
         }
-        private void UpdateDatabaseList()     //Metoda synchronizująca listbox z bazą danych
+        public static List<VideoSources> GetDatabaseList()     
         {
-            var databasePath = "D:\\Projects\\Sowa\\Sowa\\Serwer\\VideoSources.db";
-            var db = new SQLiteConnection(databasePath);
+            var db = new SQLiteConnection(MainWindow.dbPath);
             List<VideoSources> videosList = db.Table<VideoSources>().ToList();
             db.Close();
-            lbVideoSourcesList.ItemsSource = videosList;
+            return videosList;
         }
-        private void DeleteFromTable(long id)            //Metoda usuwająca wpis z bazy danych w oparciu o ID wpisu
+        private void DeleteFromTable(long id)
         {
-            var databasePath = "D:\\Projects\\Sowa\\Sowa\\Serwer\\VideoSources.db";
-            var db = new SQLiteConnection(databasePath);
+            var db = new SQLiteConnection(MainWindow.dbPath);
             db.Delete<VideoSources>(id);
             db.Close();
         }
-        private void AddToTable(VideoSources newSrc)        //Metoda dodająca wpis do bazy danych
+        private void AddToTable(VideoSources newSrc)        
         {
-            var databasePath = "D:\\Projects\\Sowa\\Sowa\\Serwer\\VideoSources.db";
-            var db = new SQLiteConnection(databasePath);
+            var db = new SQLiteConnection(MainWindow.dbPath);
             db.Insert(newSrc);
             db.Close();
         }
-        private void BtnAddNewAddress_Click(object sender, RoutedEventArgs e)   //Wywołanie okna dodawania nowego wpisu
+        private void BtnAddNewAddress_Click(object sender, RoutedEventArgs e) 
         {
             AddAddressDialog addressDialog = new AddAddressDialog();
             if(addressDialog.ShowDialog()==true)
             {
                 AddToTable(addressDialog.NewVideoSource);
-                UpdateDatabaseList();
+                lbVideoSourcesList.ItemsSource = GetDatabaseList();
             }
         }
         private void BtnDeleteSelectedAddress_Click(object sender, RoutedEventArgs e)       //Metoda usuwająca zaznaczone wpisy z bazy
@@ -64,7 +59,7 @@ namespace Serwer
             {
                 DeleteFromTable(o.Id);
             }
-            UpdateDatabaseList();
+            lbVideoSourcesList.ItemsSource = GetDatabaseList();
         }
 
 
@@ -72,6 +67,8 @@ namespace Serwer
         {
             Properties.Settings.Default.Save();
             Properties.Settings.Default.Reload();
+            var mainwindow = (MainWindow)Application.Current.MainWindow;
+            mainwindow.Combobox.ItemsSource = GetDatabaseList();
         }
 
     }

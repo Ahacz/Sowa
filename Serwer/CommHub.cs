@@ -20,26 +20,29 @@ namespace Serwer
     {
         public void RequestConnectionsList() 
         {
-            var databasePath = "D:\\Projects\\Sowa\\Sowa\\Serwer\\VideoSources.db";
-            var db = new SQLiteConnection(databasePath);
+            var db = new SQLiteConnection(MainWindow.dbPath);
             List<string> output = 
                 db.Table<VideoSources>().Select(p => p.Name).ToList();    
             Clients.Client(Context.ConnectionId).CamsInfo(output);
+            Clients.Client(Context.ConnectionId)
+                .OutputPort(Properties.Settings.Default.LocalPort);
         }
         public void RequestOutStream(string requestedName)
         {
-            var databasePath = "D:\\Projects\\Sowa\\Sowa\\Serwer\\VideoSources.db";
-            var db = new SQLiteConnection(databasePath);
+            var db = new SQLiteConnection(MainWindow.dbPath);
             string input = db.Table<VideoSources>()
                 .FirstOrDefault(p => p.Name == requestedName).Address;
             db.Close();
-            var rtsp = new Media(MainWindow._libvlc, input, FromType.FromLocation);
+            var rtsp = new Media
+                (MainWindow._libvlc, input, FromType.FromLocation);
             rtsp.AddOption(VLCControl.GetConfigurationString());
             Application.Current.Dispatcher.Invoke(() => 
             {
-                var mainwindow = (MainWindow)Application.Current.MainWindow;
+                var mainwindow = (MainWindow)Application
+                    .Current.MainWindow;
                 mainwindow.outputMediaPlayer.Stop();
-                mainwindow.outputMediaPlayer.Play(rtsp);
+                mainwindow.outputMediaPlayer.Media=rtsp;
+                mainwindow.outputMediaPlayer.Play();
             });
         }
     }
