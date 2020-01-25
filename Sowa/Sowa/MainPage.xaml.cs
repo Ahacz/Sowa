@@ -39,13 +39,16 @@ namespace Sowa
             try
             {
                 connection = new HubConnection(@uri);
+                //connection = new HubConnection(@"https://192.168.0.108:8080");
                 _hub = connection.CreateHubProxy("CommHub");
                 await connection.Start();
                 Preferences.Set("SrvAddress", AddressEntry.Text);
                 await _hub.Invoke("RequestConnectionsList");
             }
-            catch (System.Net.Http.HttpRequestException)
+            catch (Exception c)
             {
+                Console.WriteLine(c.StackTrace);
+                Console.WriteLine(c.Message);
             }
         }
         private void GetCamsNames()
@@ -66,43 +69,6 @@ namespace Sowa
             });
         }
 
-        private class DebugTextWriter : TextWriter
-        {
-            private StringBuilder buffer;
-
-            public DebugTextWriter()
-            {
-                buffer = new StringBuilder();
-            }
-
-            public override void Write(char value)
-            {
-                switch (value)
-                {
-                    case '\n':
-                        return;
-                    case '\r':
-                        Debug.WriteLine(buffer.ToString());
-                        buffer.Clear();
-                        return;
-                    default:
-                        buffer.Append(value);
-                        break;
-                }
-            }
-
-            public override void Write(string value)
-            {
-                Debug.WriteLine(value);
-
-            }
-            #region implemented abstract members of TextWriter
-            public override Encoding Encoding
-            {
-                get { throw new NotImplementedException(); }
-            }
-            #endregion
-        }
         private async void Connectionslist_ItemSelected
             (object sender, SelectedItemChangedEventArgs e)
         {

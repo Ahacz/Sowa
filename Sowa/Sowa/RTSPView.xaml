@@ -4,8 +4,8 @@
              xmlns:shared="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
              NavigationPage.HasNavigationBar="False"
              x:Class="Sowa.RTSPView">
-    <StackLayout>
+    <Grid>
         <shared:VideoView x:Name="VideoView"/>
-    </StackLayout>
+    </Grid>
 
 </ContentPage>

@@ -32,8 +32,10 @@ namespace Sowa
             var connectionURL = "rtsp://" + connectionIP 
                 + ":" + connectionPort + "/go.sdp";
             base.OnAppearing();
-            VideoView.MediaPlayer.Play(new Media
-                (_libvlc, connectionURL, FromType.FromLocation));
+            VideoView.MediaPlayer = new MediaPlayer(_libvlc);
+            VideoView.MediaPlayer.Media=new Media
+                (_libvlc, connectionURL, FromType.FromLocation);
+            VideoView.MediaPlayer.Play();
             VideoView.MediaPlayer.Mute = true;
         }
         protected override void OnDisappearing() 

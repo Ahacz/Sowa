@@ -17,8 +17,6 @@
                 <MenuItem Header="Start" Click="OnClickStartSrv" Name="StartItem"/>
                 <MenuItem Header="Stop" Click="OnClickStopSrv" IsEnabled="False" Name="StopItem"/>
                 <MenuItem Header="Ustawienia" Click="OnClickSettings" />
-                <MenuItem Header="O programie" />
-                <MenuItem Header="Pomoc"/>
             </Menu>
             <ComboBox DockPanel.Dock="Bottom" x:Name="Combobox" SelectionChanged="Combobox_SelectionChanged">
                 <ComboBox.ItemTemplate>

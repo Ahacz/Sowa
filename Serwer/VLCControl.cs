@@ -15,12 +15,14 @@ namespace Serwer
         {
             string address = Properties.Settings.Default.LocalAddress;
             string port = Properties.Settings.Default.LocalPort;
-            string result=
-                    ":sout=#duplicate" +
+            string result = ":sout=#rtp{mux=ts,dst=" + address + ",port=" + port +
+                            ",sdp=rtsp://" + address + ":" + port + "/go.sdp}";
+                    /*":sout=#rtp" +
                     "{dst=display{noaudio}," +
                     "dst=rtp{mux=ts,dst=" + address +
-                    ",port=" + port + ",sdp=rtsp://" + address + ":" + port + "/go.sdp}";
-             return result;
+                    ",port=" + port + ",sdp=rtsp://" + address + ":" + port + "/go.sdp}";*/
+
+            return result;
         }
     }
 }
