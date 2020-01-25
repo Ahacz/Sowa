@@ -38,7 +38,12 @@ namespace Sowa
             string uri = "https://" + AddressEntry.Text+":8080";
             try
             {
-                connection = new HubConnection(@uri);
+                //connection = new HubConnection(@uri);
+                connection = new HubConnection(@"http://192.168.8.116:8080");
+                var writer = new DebugTextWriter();
+                connection.TraceWriter = writer;
+                connection.TraceLevel = TraceLevels.All;
+
                 _hub = connection.CreateHubProxy("CommHub");
                 await connection.Start();
                 Preferences.Set("SrvAddress", AddressEntry.Text);
@@ -82,7 +87,7 @@ namespace Sowa
                     case '\n':
                         return;
                     case '\r':
-                        Debug.WriteLine(buffer.ToString());
+                        Console.WriteLine(buffer.ToString());
                         buffer.Clear();
                         return;
                     default:
@@ -93,7 +98,7 @@ namespace Sowa
 
             public override void Write(string value)
             {
-                Debug.WriteLine(value);
+                Console.WriteLine(value);
 
             }
             #region implemented abstract members of TextWriter
