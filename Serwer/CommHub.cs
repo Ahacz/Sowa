@@ -33,7 +33,8 @@ namespace Serwer
             string input = db.Table<VideoSources>()
                 .FirstOrDefault(p => p.Name == requestedName).Address;
             db.Close();
-            var rtsp = new Media(MainWindow._libvlc, input, FromType.FromLocation);
+            var rtsp = new Media
+                (MainWindow._libvlc, input, FromType.FromLocation);
             rtsp.AddOption(VLCControl.GetConfigurationString());
             Application.Current.Dispatcher.Invoke(() => 
             {
